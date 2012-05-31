@@ -2,9 +2,9 @@
 /*
 Plugin Name: JSON Data Shortcode
 Description: Load data via JSON and display it in a page or post - even if the browser has Javascript disabled
-Version: 1.0
+Version: 1.1
 Requires at least: WP 3.0
-Tested up to: WP 3.3.1
+Tested up to: WP 3.4-RC1
 License: Example: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
 Author: David Dean
 Author URI: http://www.generalthreat.com/
@@ -17,7 +17,6 @@ define( 'DD_JSON_DEFAULT_LIFETIME', 60 * 30 ); // default = 30 minutes
 
 class DD_JSON_Shortcode {
 	
-	var $json;
 	var $sources = array();
 	
 	function DD_JSON_Shortcode() {
@@ -27,14 +26,10 @@ class DD_JSON_Shortcode {
 
 	function do_shortcode( $attrs, $content = null ) {
 
-		if( ! class_exists( 'Services_JSON' ) ) {
-			require_once ABSPATH . 'wp-includes/class-json.php';
+		if( ! function_exists( 'json_encode' ) ) {
+			require_once ABSPATH . 'wp-includes/compat.php';
 		}
 		
-		if( ! is_object( $this->json ) ) {
-			$this->json = new Services_JSON();
-		}
-	
 		$params = shortcode_atts(
 			array(	'src'	=> '',	'name'	=> '',	'key'	=> '', 'lifetime'	=> DD_JSON_DEFAULT_LIFETIME	),
 			$attrs
@@ -43,7 +38,6 @@ class DD_JSON_Shortcode {
 		if( ! empty( $params['name'] ) && ! empty( $params['src'] ) ) {
 			$this->sources[$params['name']] = $params['src'];
 		}
-		
 		
 		if( empty( $params['src'] ) ) {
 			if( ! empty( $params['name'] ) && array_key_exists( $params['name'], $this->sources ) ) {
@@ -59,7 +53,7 @@ class DD_JSON_Shortcode {
 
 		if( ! $data = get_transient( 'json_' . md5( $params['src'] ) ) ) {
 			$this->debug( sprintf( __( 'Cached data was not found.  Fetching JSON data from: %s', 'json-shortcode' ), $params['src'] ) );
-			$data = $this->json->decode( $this->fetch_file( $params['src'] ) );
+			$data = json_decode( $this->fetch_file( $params['src'] ) );
 			set_transient( 'json_' . md5( $params['src'] ), $data, $params['lifetime'] );
 		}
 		
@@ -103,6 +97,12 @@ class DD_JSON_Shortcode {
 	function fetch_file( $uri ) {
 		
 		$result = wp_remote_get( $uri );
+		
+		if( is_wp_error( $result ) ) {
+			$this->debug( sprintf( __( 'HTTP request returned an error: %s (%s).', 'json-shortcode' ), $result->get_error_message(), $result->get_error_code() ) );
+			return $result->get_error_message();
+		}
+		
 		if( $result['response']['code'] != '200' ) {
 			$this->debug( sprintf( __( 'Server responded with: %s (%d). Data may not be usable.', 'json-shortcode' ), $result['response']['message'], $result['response']['code'] ) );
 		}

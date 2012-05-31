@@ -2,8 +2,8 @@
 Contributors: ddean
 Tags: json, data, shortcode, seo-friendly
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 1.0
+Tested up to: 3.4-RC1
+Stable tag: 1.1
 
 Load data via JSON and display it in your posts and pages - even to spiders or visitors with JavaScript disabled
 
@@ -41,7 +41,7 @@ Later in the same page...
 
 = How can I control how frequently my data is refreshed? =
 
-Use the lifetime parameter! This parameter is in seconds, per source, and should be set the same for all references to that source on a post / page, for best results.
+Use the lifetime parameter! This parameter is in seconds, is per source, and should be set the same for all references to that source on a post / page for best results.
 
 `[json src="http://example.com/my_data_src?format=json" lifetime="300"]I want my value to appear right here {myData} in the middle of my content.[/json]`
  --> Will expire the cached data after 5 minutes.
@@ -52,6 +52,10 @@ Use the lifetime parameter! This parameter is in seconds, per source, and should
  However, your data will only be checked for expiration when your site builds the post, so time your cache expiration accordingly.
 
 == Changelog ==
+
+= 1.1 =
+* Fixed: fatal error when `wp_remote_get` returned a WP_Error object
+* Changed: use native json_encode/json_decode when available for better performance
 
 = 1.0 =
 * Initial release
