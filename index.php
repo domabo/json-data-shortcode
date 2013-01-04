@@ -2,9 +2,10 @@
 /*
 Plugin Name: JSON Data Shortcode
 Description: Load data via JSON and display it in a page or post - even if the browser has Javascript disabled
-Version: 1.1
+Version: 1.2
+Revision Date: 01/03/2013
 Requires at least: WP 3.0
-Tested up to: WP 3.4-RC1
+Tested up to: WP 3.5
 License: Example: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
 Author: David Dean
 Author URI: http://www.generalthreat.com/
@@ -46,6 +47,8 @@ class DD_JSON_Shortcode {
 				return $this->debug( __( 'Must pass a source URI as "src"', 'json-shortcode' ) );
 			}
 		}
+		
+		$params['src'] = html_entity_decode( $params['src'] );
 
 		if( empty( $params['key'] ) && is_null( $content ) ) {
 			return $this->debug(__('Must pass either a key to output or content to format','json-shortcode'));

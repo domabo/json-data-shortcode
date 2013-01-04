@@ -2,8 +2,8 @@
 Contributors: ddean
 Tags: json, data, shortcode, seo-friendly
 Requires at least: 3.0
-Tested up to: 3.4-RC1
-Stable tag: 1.1
+Tested up to: 3.5
+Stable tag: 1.2
 
 Load data via JSON and display it in your posts and pages - even to spiders or visitors with JavaScript disabled
 
@@ -19,6 +19,8 @@ You can use it one of two ways (but not necessarily on the same page - see <a hr
 
 `[json src="http://example.com/my_data_src?format=json"]I want my value to appear right here {Data.mysubdata.otherKey} in the middle of my content.[/json]`
  --> replaces the text in `{}` with contents of `otherKey` in the `mysubdata` object in the `Data` object
+
+*Note:* this plugin allows you to bring content from remote sites into your posts. Please exercise caution, especially if you allow posting by untrusted users.
 
 == Installation ==
 
@@ -53,9 +55,17 @@ Use the lifetime parameter! This parameter is in seconds, is per source, and sho
 
 == Changelog ==
 
+= 1.2 =
+* Changed: decode HTML entities in src URLs (to ensure support for multiple query parameters) - thanks, bakedbeing
+
 = 1.1 =
 * Fixed: fatal error when `wp_remote_get` returned a WP_Error object
 * Changed: use native json_encode/json_decode when available for better performance
 
 = 1.0 =
 * Initial release
+
+== Upgrade Notice ==
+
+= 1.2 =
+Improved compatibility with copy / pasted URLs
