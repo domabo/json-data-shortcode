@@ -1,9 +1,9 @@
 === JSON Data Shortcode ===
 Contributors: ddean
 Tags: json, data, shortcode, seo-friendly
-Requires at least: 3.0
+Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.2
+Stable tag: 1.3
 
 Load data via JSON and display it in your posts and pages - even to spiders or visitors with JavaScript disabled
 
@@ -55,6 +55,9 @@ Use the lifetime parameter! This parameter is in seconds, is per source, and sho
 
 == Changelog ==
 
+= 1.3 =
+* Added: JSON Shortcode Diagnostic page to test shortcode syntax
+
 = 1.2 =
 * Changed: decode HTML entities in src URLs (to ensure support for multiple query parameters) - thanks, bakedbeing
 
@@ -66,6 +69,9 @@ Use the lifetime parameter! This parameter is in seconds, is per source, and sho
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.3 =
+Added a diagnostic page to let users validate JSON requests without creating a post
 
 = 1.2 =
 Improved compatibility with copy / pasted URLs
