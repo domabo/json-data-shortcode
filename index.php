@@ -61,8 +61,6 @@ class DD_JSON_Shortcode {
 		}
 		
 		if( ! empty( $params['selector'] )  && ! empty( $params['key'] ) ) {
-			$this->debug( sprintf( __( 'Selector data was not found.  Fetching JSON data from: %s', 'json-shortcode' ), $params['selector'] ) );
-		
 			return $this->parse_selector( $params['selector'], $params['key'], $data );
 		}
 		
@@ -109,12 +107,10 @@ class DD_JSON_Shortcode {
 	 */
 	function parse_selector($selector, $key, $data ) {
 		
-		return $this->debug( sprintf( __( 'Selected selector: %s was not found.', 'json-shortcode' ), $selector ) );
-		
 		$array = parse_key($selector, $data);
 		
 		foreach ($array as $item) {
-	        	if( ! isset( $item->$key ) )
+	        	if( isset( $item->$key ) )
 		        return $item->$key;
 		        }
 		return $this->debug( sprintf( __( 'Selected selector-key: %s was not found.', 'json-shortcode' ), $key ) );
