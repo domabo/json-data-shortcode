@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
+			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','items' => '', 'arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
