@@ -107,7 +107,7 @@ class DD_JSON_Shortcode {
 	 */
 	function parse_selector($selector, $key, $data ) {
 		
-		$array = parse_key($selector, $data);
+		$array = this->parse_key($selector, $data);
 		
 		return $array[0]->$key;
 		
