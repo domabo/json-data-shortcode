@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
+			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
@@ -64,6 +64,11 @@ class DD_JSON_Shortcode {
 		if( ! empty( $params['array'] )  && ! empty( $params['key'] ) ) {
 			return $this->parse_array( $params['array'], $params['key'], $data );
 		}
+		
+		if( ! empty( $params['arraystrip'] )  && ! empty( $params['key'] ) ) {
+			return $this->parse_arraystrip( $params['arraystrip'], $params['key'], $data );
+		}
+	
 		
 		if( ! empty( $params['arraykeyvalue'] )  && ! empty( $params['key'] ) ) {
 			return $this->parse_arraykeyvalue( $params['arraykeyvalue'], $params['key'], $data );
@@ -120,6 +125,26 @@ class DD_JSON_Shortcode {
 		        }
 		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
 	}
+	
+		/**
+	 * Recurse through provided object to locate specified selector and key
+	 * @param string $selector string containing the key name in JS object notation - i.e. "object.member"
+	 * @param string $key string containing the key name 
+	 * @param object $data object containing all received JSON data, or a subset during recursion
+	 * @return mixed the value retrieved from the specified key or a string on error
+	 */
+	function parse_arraystrip($selector, $key, $data ) {
+		
+		$array = $this->parse_key($selector, $data);
+		
+		foreach ($array as $item) {
+	        	if( isset( $item->$key ) )
+		        return $item->$key;
+		        }
+		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
+	}
+	
+
 	
 		/**
 	 * Recurse through provided object to locate specified selector and key
