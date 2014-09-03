@@ -133,7 +133,7 @@ class DD_JSON_Shortcode {
 		$array = $this->parse_key($selector, $data);
 		
 		foreach ($array as $item) {
-	        	if( ( $item->"Key") == $key  )
+	        	if( $item->"Key" == $key  )
 		        return $item->"Value";
 		        }
 		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
