@@ -60,7 +60,10 @@ class DD_JSON_Shortcode {
 			set_transient( 'json_' . md5( $params['src'] ), $data, $params['lifetime'] );
 		}
 		
-		
+			if( ! empty( $params['items'] )) {
+			return $this->parse_items(  $data );
+		}
+	
 		if( ! empty( $params['array'] )  && ! empty( $params['key'] ) ) {
 			return $this->parse_array( $params['array'], $params['key'], $data );
 		}
@@ -123,6 +126,26 @@ class DD_JSON_Shortcode {
 	        	if( isset( $item->$key ) )
 		        return $item->$key;
 		        }
+		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
+	}
+	
+	/**
+	 * Recurse through provided object to locate specified selector and key
+	 * @param string $selector string containing the key name in JS object notation - i.e. "object.member"
+	 * @param string $key string containing the key name 
+	 * @param object $data object containing all received JSON data, or a subset during recursion
+	 * @return mixed the value retrieved from the specified key or a string on error
+	 */
+	function parse_items($data ) {
+		
+		$array = $data->results->Individuals;
+		
+		foreach ($array as $item) {
+			$name = $item->item->text;
+			$href= $item->item->href;
+			$value = $item->value;
+			return $name . " : " . $href . ":" . $value;
+	        		        }
 		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
 	}
 	
