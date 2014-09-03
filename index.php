@@ -2,12 +2,12 @@
 /*
 Plugin Name: JSON Data Shortcode
 Description: Load data via JSON and display it in a page or post - even if the browser has Javascript disabled
-Version: 1.3
-Revision Date: 07/13/2014
+Version: 1.4
+Revision Date: 09/03/2014
 Requires at least: WP 3.3
 Tested up to: WP 3.9.1
 License: Example: GNU General Public License 2.0 (GPL) http://www.gnu.org/licenses/gpl.html
-Author: David Dean
+Author: David Dean, Domabo
 Author URI: http://www.generalthreat.com/
 */
 
@@ -60,6 +60,10 @@ class DD_JSON_Shortcode {
 			set_transient( 'json_' . md5( $params['src'] ), $data, $params['lifetime'] );
 		}
 		
+		if( ! empty( $params['selector'] )  && ! empty( $params['key'] ) ) {
+			return $this->parse_selector( $params['selector'], $params['key'], $data );
+		}
+		
 		if( ! empty( $params['key'] ) ) {
 			return $this->parse_key( $params['key'], $data );
 		}
@@ -93,6 +97,26 @@ class DD_JSON_Shortcode {
 			return $this->debug( sprintf( __( 'Selected key: %s was not found.', 'json-shortcode' ), $param ) );
 		return $this->parse_key( implode( '.', $parts ), $data->$param );
 	}
+	
+	/**
+	 * Recurse through provided object to locate specified selector and key
+	 * @param string $selector string containing the key name in JS object notation - i.e. "object.member"
+	 * @param string $key string containing the key name 
+	 * @param object $data object containing all received JSON data, or a subset during recursion
+	 * @return mixed the value retrieved from the specified key or a string on error
+	 */
+	function parse_selector($selector, $key, $data ) {
+		
+		$array = parse_key($selector, $data);
+		
+		foreach ($array as $item) {
+	        	if( ! isset( $item->$key ) )
+		        return $item->$key;
+		        }
+		}
+		return $this->debug( sprintf( __( 'Selected key: %s was not found.', 'json-shortcode' ), $key ) );
+	}
+	
 	
 	/**
 	 * Get the file requested in $uri
