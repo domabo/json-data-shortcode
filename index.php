@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src' => '', 'name' => '', 'key' => '', 'selector' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
+			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
@@ -60,9 +60,14 @@ class DD_JSON_Shortcode {
 			set_transient( 'json_' . md5( $params['src'] ), $data, $params['lifetime'] );
 		}
 		
-		if( ! empty( $params['selector'] )  && ! empty( $params['key'] ) ) {
-			return $this->parse_selector( $params['selector'], $params['key'], $data );
+		if( ! empty( $params['array'] )  && ! empty( $params['key'] ) ) {
+			return $this->parse_array( $params['array'], $params['key'], $data );
 		}
+		
+		if( ! empty( $params['arraykeyvalue'] )  && ! empty( $params['key'] ) ) {
+			return $this->parse_arraykeyvalue( $params['arraykeyvalue'], $params['key'], $data );
+		}
+
 		
 		if( ! empty( $params['key'] ) ) {
 			return $this->parse_key( $params['key'], $data );
@@ -105,7 +110,7 @@ class DD_JSON_Shortcode {
 	 * @param object $data object containing all received JSON data, or a subset during recursion
 	 * @return mixed the value retrieved from the specified key or a string on error
 	 */
-	function parse_selector($selector, $key, $data ) {
+	function parse_array($selector, $key, $data ) {
 		
 		$array = $this->parse_key($selector, $data);
 		
@@ -113,9 +118,26 @@ class DD_JSON_Shortcode {
 	        	if( isset( $item->$key ) )
 		        return $item->$key;
 		        }
-		return $this->debug( sprintf( __( 'Selected selector-key: %s was not found.', 'json-shortcode' ), $key ) );
+		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
 	}
 	
+		/**
+	 * Recurse through provided object to locate specified selector and key
+	 * @param string $selector string containing the key name in JS object notation - i.e. "object.member"
+	 * @param string $key string containing the key name 
+	 * @param object $data object containing all received JSON data, or a subset during recursion
+	 * @return mixed the value retrieved from the specified key or a string on error
+	 */
+	function parse_arraykeyvalue($selector, $key, $data ) {
+		
+		$array = $this->parse_key($selector, $data);
+		
+		foreach ($array as $item) {
+	        	if( ( $item->"Key") == $key  )
+		        return $item->"Value";
+		        }
+		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
+	}
 	
 	/**
 	 * Get the file requested in $uri
