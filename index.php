@@ -113,7 +113,6 @@ class DD_JSON_Shortcode {
 	        	if( ! isset( $item->$key ) )
 		        return $item->$key;
 		        }
-		}
 		return $this->debug( sprintf( __( 'Selected key: %s was not found.', 'json-shortcode' ), $key ) );
 	}
 	
