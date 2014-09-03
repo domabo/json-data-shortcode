@@ -157,7 +157,7 @@ class DD_JSON_Shortcode {
 			$name = $item->item->text;
 			if ($name == "Guy Barnard")
 			{
-			   $name = "Guy Barnard + Partners"
+			   $name = "Guy Barnard + Partners";
 			}
 			$href= $item->item->href;
 			$value = $item->value;
