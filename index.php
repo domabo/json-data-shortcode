@@ -138,16 +138,21 @@ class DD_JSON_Shortcode {
 	 */
 	function parse_items($data ) {
 		
+			$retvalue = "<ul>";
+	
 		$array = $data->results->Individuals;
+		
 		
 		foreach ($array as $item) {
 			$name = $item->item->text;
 			$href= $item->item->href;
 			$value = $item->value;
-			return $name . " : " . $href . ":" . $value;
+			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
 	        		        }
-		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
-	}
+	       
+	       $retvalue .= "</ul>";
+	       return $retvalue;
+	 }
 	
 		/**
 	 * Recurse through provided object to locate specified selector and key
