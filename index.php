@@ -107,13 +107,15 @@ class DD_JSON_Shortcode {
 	 */
 	function parse_selector($selector, $key, $data ) {
 		
+		return $this->debug( sprintf( __( 'Selected selector: %s was not found.', 'json-shortcode' ), $selector ) );
+		
 		$array = parse_key($selector, $data);
 		
 		foreach ($array as $item) {
 	        	if( ! isset( $item->$key ) )
 		        return $item->$key;
 		        }
-		return $this->debug( sprintf( __( 'Selected key: %s was not found.', 'json-shortcode' ), $key ) );
+		return $this->debug( sprintf( __( 'Selected selector-key: %s was not found.', 'json-shortcode' ), $key ) );
 	}
 	
 	
