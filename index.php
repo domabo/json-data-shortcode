@@ -138,7 +138,7 @@ class DD_JSON_Shortcode {
 	 */
 	function parse_items($data ) {
 		
-		$retvalue = "<ul>";
+		$retvalue = "<ul style='list-style-type: none;'>";
 			
 		$array = $data->results->Team;
 		
