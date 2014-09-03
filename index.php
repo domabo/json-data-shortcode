@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src'	=> '',	'name'	=> '',	'key'	=> '', 'selector'	=> '', 'lifetime'	=> DD_JSON_DEFAULT_LIFETIME	),
+			array(	'src' => '', 'name' => '', 'key' => '', 'selector' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
@@ -61,6 +61,8 @@ class DD_JSON_Shortcode {
 		}
 		
 		if( ! empty( $params['selector'] )  && ! empty( $params['key'] ) ) {
+			$this->debug( sprintf( __( 'Selector data was not found.  Fetching JSON data from: %s', 'json-shortcode' ), $params['selector'] ) );
+		
 			return $this->parse_selector( $params['selector'], $params['key'], $data );
 		}
 		
