@@ -156,7 +156,9 @@ class DD_JSON_Shortcode {
 		foreach ($array as $item) {
 			$name = $item->item->text;
 			if ($name == "Guy Barnard")
-			   $name == "Guy Barnard + Partners"
+			{
+			   $name = "Guy Barnard + Partners"
+			}
 			$href= $item->item->href;
 			$value = $item->value;
 			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
