@@ -139,7 +139,7 @@ class DD_JSON_Shortcode {
 		
 		foreach ($array as $item) {
 	        	if( isset( $item->$key ) )
-	        	str_replace("$", "",str_replace(",", "", $item->$key));
+	        	return str_replace("$", "",str_replace(",", "", $item->$key));
 		        }
 		return $this->debug( sprintf( __( 'Selected array-key: %s was not found.', 'json-shortcode' ), $key ) );
 	}
