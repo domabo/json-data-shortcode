@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
+			array(	'src' => '', 'name' => '', 'key' => '','xpath' => '', 'array' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
@@ -50,14 +50,18 @@ class DD_JSON_Shortcode {
 		
 		$params['src'] = html_entity_decode( $params['src'] );
 
-		if( empty( $params['key'] ) && is_null( $content ) ) {
-			return $this->debug(__('Must pass either a key to output or content to format','json-shortcode'));
-		}
-
 		if( ! $data = get_transient( 'json_' . md5( $params['src'] ) ) ) {
 			$this->debug( sprintf( __( 'Cached data was not found.  Fetching JSON data from: %s', 'json-shortcode' ), $params['src'] ) );
 			$data = json_decode( $this->fetch_file( $params['src'] ) );
 			set_transient( 'json_' . md5( $params['src'] ), $data, $params['lifetime'] );
+		}
+		
+		if( ! empty( $params['xpath'] ) ) {
+			return $data[$params['xpath']];
+		}
+		
+		if( empty( $params['key'] ) && is_null( $content ) ) {
+			return $this->debug(__('Must pass either a key to output or content to format','json-shortcode'));
 		}
 		
 		if( ! empty( $params['array'] )  && ! empty( $params['key'] ) ) {
