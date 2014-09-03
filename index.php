@@ -138,7 +138,27 @@ class DD_JSON_Shortcode {
 	 */
 	function parse_items($data ) {
 		
-			$retvalue = "<ul>";
+		$retvalue = "<ul>";
+			
+		$array = $data->results->Team;
+		
+		
+		foreach ($array as $item) {
+			$name = $item->item->text;
+			$href= $item->item->href;
+			$value = $item->value;
+			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
+	        		        }
+	        		        
+	        $array = $data->results->Captains;
+		
+		
+		foreach ($array as $item) {
+			$name = $item->item->text;
+			$href= $item->item->href;
+			$value = $item->value;
+			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
+	        		        }
 	
 		$array = $data->results->Individuals;
 		
