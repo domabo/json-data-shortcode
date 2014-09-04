@@ -178,13 +178,15 @@ class DD_JSON_Shortcode {
 	        		        }
 	        		        
 	        $array = $data->results->HonorRoll;
+	        $retvalue .= "<ul>";
 		
 		foreach ($array as $item) {
 			$name = $item->item;
 			$name .= " " . $item->description;
 			$value = $item->value;
-			$retvalue .= "<li><a href='#'>&nbsp;&nbsp;" . $name . " " . $value . "</a></li>";
+			$retvalue .= "<li><a href='#'>" . $name . " " . $value . "</a></li>";
 	        		        }
+		$retvalue .= "</ul>";
 	  
 	       $retvalue .= "</ul>";
 	       return $retvalue;
