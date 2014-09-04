@@ -151,16 +151,17 @@ class DD_JSON_Shortcode {
 			
 			if ($name == "Guy Barnard")
 			{
-			   $name = "Guy Barnard + Partners";
+			   $name = "Partners via Guy Barnard";
 			   $valueint = intval(str_replace("$", "",str_replace(",", "", $value)));
-			   $value = number_format($valueint);
-			   $retvalue .= "<li><a href='" . $href ."'>" . $name . " $" . $value . "</a></li>";
+			   $value = number_format($valueint - 900);
+			   $retvalue .= "<li><a href='" . $href ."'>Guy & Sarah Barnard" . " $" . "1,000" . "</a></li>";
+			    $retvalue .= "<li><a href='" . $href ."'>" . $name . " $" . $value . "</a></li>";
 			}
 			else
 			{
 			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
 			}
-	        		        }
+	         }
 	
 		$array = $data->results->Individuals;
 		
@@ -169,7 +170,8 @@ class DD_JSON_Shortcode {
 			$name = $item->item->text;
 			$href= $item->item->href;
 			$value = $item->value;
-			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
+			if !($name == "Sarah Barnard")
+				$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
 	        		        }
 	        		        
 	        $array = $data->results->Team;
