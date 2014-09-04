@@ -14,7 +14,7 @@ Author URI: http://www.generalthreat.com/
 define( 'DD_JSON_KEY_REGEX', '/\{([^\}]+)\}/' );
 
 /** How long (in seconds) to cache retrieved data - can be overridden with the 'lifetime' parameter */
-define( 'DD_JSON_DEFAULT_LIFETIME', 60 * 30 ); // default = 30 minutes
+define( 'DD_JSON_DEFAULT_LIFETIME', 60 * 2 ); // default = 2 minutes
 
 class DD_JSON_Shortcode {
 	
@@ -140,27 +140,20 @@ class DD_JSON_Shortcode {
 		
 		$retvalue = "<ul style='list-style-type: none;'>";
 			
-		$array = $data->results->Team;
-		
-		
-		foreach ($array as $item) {
-			$name = $item->item->text;
-			$href= $item->item->href;
-			$value = $item->value;
-			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
-	        		        }
-	        		        
+	      		        
 	        $array = $data->results->Captains;
 		
 		
 		foreach ($array as $item) {
 			$name = $item->item->text;
+			$href= $item->item->href;
+			$value = $item->value;
+			
 			if ($name == "Guy Barnard")
 			{
 			   $name = "Guy Barnard + Partners";
 			}
-			$href= $item->item->href;
-			$value = $item->value;
+		
 			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
 	        		        }
 	
@@ -173,7 +166,26 @@ class DD_JSON_Shortcode {
 			$value = $item->value;
 			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
 	        		        }
-	       
+	        		        
+	        $array = $data->results->Team;
+		
+		
+		foreach ($array as $item) {
+			$name = $item->item->text;
+			$href= $item->item->href;
+			$value = $item->value;
+			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
+	        		        }
+	        		        
+	        $array = $data->results->HonorRoll;
+		
+		foreach ($array as $item) {
+			$name = $item->item;
+			$name .= " " . $item->description
+			$value = $item->value;
+			$retvalue .= "<li>&nbsp;&nbsp;" . $name . " " . $value . "</a></li>";
+	        		        }
+	  
 	       $retvalue .= "</ul>";
 	       return $retvalue;
 	 }
