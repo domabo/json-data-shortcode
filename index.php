@@ -183,7 +183,7 @@ class DD_JSON_Shortcode {
 			$name = $item->item;
 			$name .= " " . $item->description;
 			$value = $item->value;
-			$retvalue .= "<li>&nbsp;&nbsp;" . $name . " " . $value . "</a></li>";
+			$retvalue .= "<li><a href='#'>&nbsp;&nbsp;" . $name . " " . $value . "</a></li>";
 	        		        }
 	  
 	       $retvalue .= "</ul>";
