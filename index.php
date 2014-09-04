@@ -152,9 +152,14 @@ class DD_JSON_Shortcode {
 			if ($name == "Guy Barnard")
 			{
 			   $name = "Guy Barnard + Partners";
+			   $valueint = intval(str_replace("$", "",str_replace(",", "", $value)));
+			   $value = number_format($valueint);
+			   $retvalue .= "<li><a href='" . $href ."'>" . $name . " $" . $value . "</a></li>";
 			}
-		
+			else
+			{
 			$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
+			}
 	        		        }
 	
 		$array = $data->results->Individuals;
