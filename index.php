@@ -181,7 +181,7 @@ class DD_JSON_Shortcode {
 		
 		foreach ($array as $item) {
 			$name = $item->item;
-			$name .= " " . $item->description
+			$name .= " " . $item->description;
 			$value = $item->value;
 			$retvalue .= "<li>&nbsp;&nbsp;" . $name . " " . $value . "</a></li>";
 	        		        }
