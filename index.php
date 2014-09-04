@@ -170,8 +170,13 @@ class DD_JSON_Shortcode {
 			$name = $item->item->text;
 			$href= $item->item->href;
 			$value = $item->value;
-			if !($name == "Sarah Barnard")
+			if ($name == "Sarah Barnard")
+			{
+				
+			} else
+			{
 				$retvalue .= "<li><a href='" . $href ."'>" . $name . " " . $value . "</a></li>";
+			}
 	        		        }
 	        		        
 	        $array = $data->results->Team;
