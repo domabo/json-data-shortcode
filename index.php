@@ -14,7 +14,7 @@ Author URI: http://www.generalthreat.com/
 define( 'DD_JSON_KEY_REGEX', '/\{([^\}]+)\}/' );
 
 /** How long (in seconds) to cache retrieved data - can be overridden with the 'lifetime' parameter */
-define( 'DD_JSON_DEFAULT_LIFETIME', 60 * 2 ); // default = 2 minutes
+define( 'DD_JSON_DEFAULT_LIFETIME', 60 * 5 ); // default = 5 minutes
 
 class DD_JSON_Shortcode {
 	
