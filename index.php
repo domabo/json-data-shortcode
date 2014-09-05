@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','items' => '', 'arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
+			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','items' => '','honor' => '', 'arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
@@ -62,6 +62,10 @@ class DD_JSON_Shortcode {
 		
 			if( ! empty( $params['items'] )) {
 			return $this->parse_items(  $data );
+		}
+		
+		if( ! empty( $params['honor'] )) {
+			return $this->parse_honor(  $data );
 		}
 	
 		if( ! empty( $params['array'] )  && ! empty( $params['key'] ) ) {
@@ -130,9 +134,7 @@ class DD_JSON_Shortcode {
 	}
 	
 	/**
-	 * Recurse through provided object to locate specified selector and key
-	 * @param string $selector string containing the key name in JS object notation - i.e. "object.member"
-	 * @param string $key string containing the key name 
+	 * Recurse through provided object 
 	 * @param object $data object containing all received JSON data, or a subset during recursion
 	 * @return mixed the value retrieved from the specified key or a string on error
 	 */
@@ -199,6 +201,39 @@ class DD_JSON_Shortcode {
 			$retvalue .= "<li><a href='#'>" . $name . " " . $value . "</a></li>";
 	        		        }
 		$retvalue .= "</ul>";
+	  
+	       $retvalue .= "</ul>";
+	       return $retvalue;
+	 }
+	 
+	 	/**
+	 * Recurse through provided object
+	 * @param object $data object containing all received JSON data, or a subset during recursion
+	 * @return mixed the value retrieved from the specified key or a string on error
+	 */
+	function parse_honor($data ) {
+		
+		$retvalue = "<ul>";
+	      		       
+	        $array = $data->results->HonorRoll;
+		$array2 = $data->results->collection2;
+		$count = 0;
+	
+		foreach ($array as $item) {
+			$name = $item->item;
+			$value = $item->value;
+			$description = $array2[$count]->description;
+			$count = $count +1;
+			
+			if ($name == "From Guy Barnard")
+			{
+			}
+			else
+			{
+			$retvalue .= "<li><a href='" . "#" ."'>" . $name . " " $description . " " . $value . "</a></li>";
+			}
+	         }
+	
 	  
 	       $retvalue .= "</ul>";
 	       return $retvalue;
