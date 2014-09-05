@@ -68,8 +68,8 @@ class DD_JSON_Shortcode {
 			return $this->parse_honor(  $data );
 		}
 		
-		if( ! empty( $params['list'] )) {
-			return $this->parse_list(  $data );
+		if( ! empty( $params['list'] )  && ! empty( $params['key'] ) {
+			return $this->parse_list(  $data , $params['key']);
 		}
 	
 	
@@ -249,11 +249,11 @@ class DD_JSON_Shortcode {
 	 * @param object $data object containing all received JSON data, or a subset during recursion
 	 * @return mixed the value retrieved from the specified key or a string on error
 	 */
-	function parse_list($data) {
+	function parse_list($data, $key) {
 		
 		$retvalue = "<ul>";
 	      		       
-	        $array = $data->results->list;
+	        $array = $data->results->$key;
 	
 		foreach ($array as $item) {
 			$name = $item->item->text;
