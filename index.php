@@ -230,7 +230,7 @@ class DD_JSON_Shortcode {
 			}
 			else
 			{
-			$retvalue .= "<li><a href='" . "#" ."'>" . $name . " " $description . " " . $value . "</a></li>";
+			$retvalue .= "<li><a href='" . "#" ."'>" . $name . " " . $description . " " . $value . "</a></li>";
 			}
 	         }
 	
