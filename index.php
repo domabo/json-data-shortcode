@@ -32,7 +32,7 @@ class DD_JSON_Shortcode {
 		}
 		
 		$params = shortcode_atts(
-			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','items' => '','honor' => '', 'arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
+			array(	'src' => '', 'name' => '', 'key' => '', 'array' => '','list' => '','items' => '','honor' => '', 'arraystrip' => '', 'arraykeyvalue' => '', 'lifetime' => DD_JSON_DEFAULT_LIFETIME ),
 			$attrs
 		);
 		
@@ -235,6 +235,27 @@ class DD_JSON_Shortcode {
 	         }
 	
 	  
+	       $retvalue .= "</ul>";
+	       return $retvalue;
+	 }
+	 
+	 	/**
+	 * Recurse through provided object
+	 * @param object $data object containing all received JSON data, or a subset during recursion
+	 * @return mixed the value retrieved from the specified key or a string on error
+	 */
+	function parse_list($data) {
+		
+		$retvalue = "<ul>";
+	      		       
+	        $array = $data->results[0];
+	
+		foreach ($array as $item) {
+			$name = $item->text;
+			$href = $item->href;
+			$retvalue .= "<li><a href='" . $href ."'>" . $name . "</a></li>";
+	         }
+	
 	       $retvalue .= "</ul>";
 	       return $retvalue;
 	 }
