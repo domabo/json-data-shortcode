@@ -68,7 +68,7 @@ class DD_JSON_Shortcode {
 			return $this->parse_honor(  $data );
 		}
 		
-		if( ! empty( $params['list'] )  && ! empty( $params['key'] ) {
+		if( ! empty( $params['list'] )  && ! empty( $params['key'] )) {
 			return $this->parse_list(  $data , $params['key']);
 		}
 	
