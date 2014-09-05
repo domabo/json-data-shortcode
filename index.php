@@ -253,12 +253,12 @@ class DD_JSON_Shortcode {
 		
 		$retvalue = "<ul>";
 	      		       
-	        $array = $data->results["list"];
+	        $array = $data->results->list;
 	
 		foreach ($array as $item) {
 			$name = $item->item->text;
 			$href = $item->item->href;
-			$retvalue .= "<li><a href='" . $href ."'>" . $name . "</a></li>";
+			$retvalue .= "<li><a href='" . $href . "'>" . $name . "</a></li>";
 	         }
 	
 	       $retvalue .= "</ul>";
