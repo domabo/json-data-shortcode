@@ -253,7 +253,7 @@ class DD_JSON_Shortcode {
 		
 		$retvalue = "<ul>";
 	      		       
-	        $array = $data->results[0];
+	        $array = $data->results["list"];
 	
 		foreach ($array as $item) {
 			$name = $item->text;
